@@ -1,0 +1,116 @@
+import { useSuspenseQuery } from "@tanstack/react-query";
+import Card from "./Card";
+import { getWeather } from "../../api";
+import {
+  Cloud,
+  Sun,
+  Gauge,
+  Wind,
+  Compass,
+  Sunrise,
+  Sunset,
+  Droplets,
+  SunMedium,
+} from "lucide-react";
+
+type Props = {};
+
+const rows = [
+  {
+    label: "Cloudiness (%)",
+    value: "clouds",
+    icon: Cloud,
+  },
+  {
+    label: "UVI Index",
+    value: "uvi",
+    icon: SunMedium,
+  },
+  {
+    label: "Wind Direction",
+    value: "wind_deg",
+    icon: Compass,
+  },
+  {
+    label: "Pressure (hPa)",
+    value: "pressure",
+    icon: Gauge,
+  },
+  {
+    label: "Humidity (%)",
+    value: "humidity",
+    icon: Droplets,
+  },
+  {
+    label: "Wind Speed (m/s)",
+    value: "wind_speed",
+    icon: Wind,
+  },
+  {
+    label: "Sunrise",
+    value: "sunrise",
+    icon: Sunrise,
+  },
+  {
+    label: "Sunset",
+    value: "sunset",
+    icon: Sunset,
+  },
+] as const;
+
+// 🔧 Formatter Component
+export const Formatter = ({
+  number,
+  value,
+}: {
+  number: number;
+  value: string;
+}) => {
+  if (value === "sunrise" || value === "sunset") {
+    return (
+      <span>
+        {new Date(number * 1000).toLocaleTimeString(undefined, {
+          hour: "numeric",
+          minute: "2-digit",
+          hour12: true,
+        })}
+      </span>
+    );
+  }
+
+  return <span>{number}</span>;
+};
+
+const AdditionalInfo = (props: Props) => {
+  const { data } = useSuspenseQuery({
+    queryKey: ["weather"],
+    queryFn: () => getWeather({ lat: 41, lon: 69 }),
+  });
+
+  return (
+    <Card
+      title="Additional Weather Info"
+      ChildrenclassName="flex flex-col gap-6"
+    >
+      {rows.map((row) => {
+        const Icon = row.icon;
+        const value = data?.current[row.value];
+
+        return (
+          <div
+            key={row.value}
+            className="flex justify-between items-center text-white/90"
+          >
+            <div className="flex items-center gap-3">
+              <Icon className="w-5 h-5 text-blue-400" />
+              <span>{row.label}</span>
+            </div>
+            <Formatter value={row.value} number={value} />
+          </div>
+        );
+      })}
+    </Card>
+  );
+};
+
+export default AdditionalInfo;

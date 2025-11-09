@@ -1,1 +1,25 @@
 @import "tailwindcss";
+.custom-scroll::-webkit-scrollbar {
+  height: 2px;
+}
+
+.custom-scroll::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 10px;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+  background: linear-gradient(90deg, #0d386c, #a78bfa);
+  border-radius: 10px;
+  transition: background 0.3s ease;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(90deg, #303338, #8b5cf6);
+}
+
+/* For Firefox */
+.custom-scroll {
+  scrollbar-color: #4d4e50 transparent;
+  scrollbar-width: thin;
+}
