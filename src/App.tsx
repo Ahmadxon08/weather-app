@@ -1,5 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { getWeather } from "./api";
+import Card from "./components/card/Card";
+import DailyCard from "./components/card/DailyCard";
 
 const App = () => {
   const { data } = useQuery({
@@ -10,12 +12,12 @@ const App = () => {
   console.log(data);
 
   return (
-    <div className="flex justify-center items-center p-5 bg-amber-500 w-full h-screen">
-      {data ? (
-        <pre>{JSON.stringify(data, null, 2)}</pre>
-      ) : (
-        <p>Yuklanmoqda...</p>
-      )}
+    <div className="flex justify-center flex-col items-center bg-amber-500  h-screen p-5">
+      <Card title="Current Weather">
+        {JSON.stringify(data?.current).slice(0, 100)}
+      </Card>
+
+      <DailyCard />
     </div>
   );
 };
