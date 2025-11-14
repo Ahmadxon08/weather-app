@@ -4,6 +4,7 @@ import DailyCard from "./components/card/DailyCard";
 import HourlyCard from "./components/card/HourlyCard";
 import CurrentCard from "./components/card/CurrentCard";
 import AdditionalInfo from "./components/card/AdditionalInfo";
+import Map from "./components/card/Map";
 
 const App = () => {
   const { data } = useQuery({
@@ -15,9 +16,9 @@ const App = () => {
 
   return (
     <div className="flex justify-center flex-col items-center bg-gray-800 gap-3.5 p-4">
+      <Map />
       <CurrentCard />
       <HourlyCard />
-
       <DailyCard />
       <AdditionalInfo />
     </div>

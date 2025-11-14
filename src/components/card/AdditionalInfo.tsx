@@ -10,9 +10,8 @@ import {
   Sunset,
   Droplets,
   SunMedium,
+  ArrowUp,
 } from "lucide-react";
-
-type Props = {};
 
 const rows = [
   {
@@ -76,10 +75,21 @@ export const Formatter = ({
     );
   }
 
+  if (value === "wind_deg") {
+    return (
+      <ArrowUp
+        className="size-6 invet"
+        style={{
+          transform: `rotate(${number}deg)`,
+        }}
+      />
+    );
+  }
+
   return <span>{number}</span>;
 };
 
-const AdditionalInfo = (props: Props) => {
+const AdditionalInfo = () => {
   const { data } = useSuspenseQuery({
     queryKey: ["weather"],
     queryFn: () => getWeather({ lat: 41, lon: 69 }),
