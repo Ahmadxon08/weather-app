@@ -12,6 +12,7 @@ import {
   SunMedium,
   ArrowUp,
 } from "lucide-react";
+import type { CoordsType } from "../../schemas/types";
 
 const rows = [
   {
@@ -89,10 +90,14 @@ export const Formatter = ({
   return <span>{number}</span>;
 };
 
-const AdditionalInfo = () => {
+type Props = {
+  coords: CoordsType;
+};
+
+const AdditionalInfo = ({ coords }: Props) => {
   const { data } = useSuspenseQuery({
-    queryKey: ["weather"],
-    queryFn: () => getWeather({ lat: 41, lon: 69 }),
+    queryKey: ["weather", coords],
+    queryFn: () => getWeather({ lat: coords.lat, lon: coords.lon }),
   });
 
   return (
