@@ -3,7 +3,6 @@ import Card from "./Card";
 import { getWeather } from "../../api";
 import {
   Cloud,
-  Sun,
   Gauge,
   Wind,
   Compass,
@@ -58,7 +57,6 @@ const rows = [
   },
 ] as const;
 
-// 🔧 Formatter Component
 export const Formatter = ({
   number,
   value,
