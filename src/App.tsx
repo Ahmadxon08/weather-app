@@ -3,13 +3,17 @@ import HourlyCard from "./components/card/HourlyCard";
 import CurrentCard from "./components/card/CurrentCard";
 import AdditionalInfo from "./components/card/AdditionalInfo";
 import Map from "./components/card/Map";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import type { CoordsType } from "./schemas/types";
 import LocationDropDown from "./components/dropdown/LocationDropDown";
 import { useQuery } from "@tanstack/react-query";
 import { getGeoCoding } from "./api";
 import MapTypeDropDown from "./components/dropdown/MaptypeDropdown";
 import MapLegand from "./components/card/MapLegand";
+import CurrentSkeleton from "./components/skeletons/CurrentSkeleton";
+import HourlySkeleton from "./components/skeletons/HourlySkeleton";
+import DailySkeleton from "./components/skeletons/DailySkeleton";
+import AdditionalSkeleton from "./components/skeletons/AdditionalSkeleton";
 
 const App = () => {
   const [coordinates, setCoords] = useState<CoordsType>({
@@ -54,10 +58,21 @@ const App = () => {
         />
         <MapLegand mapType={mapType} />
       </div>
-      <CurrentCard coords={coords} />
-      <HourlyCard coords={coords} />
-      <DailyCard coords={coords} />
-      <AdditionalInfo coords={coords} />
+      <Suspense fallback={<CurrentSkeleton />}>
+        <CurrentCard coords={coords} />
+      </Suspense>
+
+      <Suspense fallback={<HourlySkeleton />}>
+        <HourlyCard coords={coords} />
+      </Suspense>
+
+      <Suspense fallback={<DailySkeleton />}>
+        <DailyCard coords={coords} />
+      </Suspense>
+
+      <Suspense fallback={<AdditionalSkeleton />}>
+        <AdditionalInfo coords={coords} />
+      </Suspense>
     </div>
   );
 };

@@ -7,8 +7,8 @@ export const WeatherSchema = z.object({
   timezone_offset: z.number(),
   current: z.object({
     dt: z.number(),
-    sunrise: z.number(),
-    sunset: z.number(),
+    sunrise: z.number().default(0),
+    sunset: z.number().default(0),
     temp: z.number(),
     feels_like: z.number(),
     pressure: z.number(),
