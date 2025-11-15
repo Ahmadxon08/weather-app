@@ -1,17 +1,19 @@
 import { MapContainer, Marker, TileLayer, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import type { CoordsType } from "../../schemas/types";
+const API_KEY = import.meta.env.VITE_API_KEY;
 
 type Props = {
   coords: CoordsType;
   handleClickMap: (lat: number, lon: number) => void;
+  mapType: string;
 };
-const MapClick = ({ handleClickMap }: Omit<Props, "coords">) => {
+const MapClick = ({ handleClickMap, coords }: Omit<Props, "mapType">) => {
   const map = useMap();
 
+  map.panTo([coords.lat, coords.lon]);
   map.on("click", (e) => {
     const { lat, lng } = e.latlng;
-    map.panTo([lat, lng]);
 
     console.log(e);
 
@@ -20,7 +22,7 @@ const MapClick = ({ handleClickMap }: Omit<Props, "coords">) => {
   return null;
 };
 
-const Map = ({ coords, handleClickMap }: Props) => {
+const Map = ({ coords, handleClickMap, mapType }: Props) => {
   const { lat, lon } = coords;
   return (
     <div className="flex justify-center w-full px-10">
@@ -32,10 +34,13 @@ const Map = ({ coords, handleClickMap }: Props) => {
           height: "500px",
         }}
       >
-        <MapClick handleClickMap={handleClickMap} />
+        <MapClick handleClickMap={handleClickMap} coords={coords} />
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        <TileLayer
+          url={`https://tile.openweathermap.org/map/${mapType}/{z}/{x}/{y}.png?appid=${API_KEY}`}
         />
         <Marker position={[lat, lon]} />
       </MapContainer>

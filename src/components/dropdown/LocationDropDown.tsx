@@ -5,9 +5,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import type { Dispatch, SetStateAction } from "react";
 
 type Props = {
-  onCityChange?: (city: string) => void;
+  location: string;
+  setLocation: Dispatch<SetStateAction<string>>;
 };
 
 const worldCities = [
@@ -23,13 +25,17 @@ const worldCities = [
   "Madrid",
 ];
 
-const LocationDropDown = ({ onCityChange }: Props) => {
+const LocationDropDown = ({ location, setLocation }: Props) => {
+  console.log("custom", location);
   return (
-    <Select onValueChange={onCityChange}>
+    <Select value={location} onValueChange={(value) => setLocation(value)}>
       <SelectTrigger className="w-[180px]">
         <SelectValue placeholder="Select city" />
       </SelectTrigger>
       <SelectContent className="z-[10002]">
+        {location === "custom" && (
+          <SelectItem value="custom">Custom</SelectItem>
+        )}
         {worldCities.map((city) => (
           <SelectItem value={city} key={city}>
             {city}

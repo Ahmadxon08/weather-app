@@ -1,3 +1,4 @@
+import { GeocodeSchema } from "./schemas/GeocodeSchema";
 import { WeatherSchema, type WeatherType } from "./schemas/WeatherSchema";
 
 const API_KEY = import.meta.env.VITE_API_KEY;
@@ -9,18 +10,24 @@ export const getWeather = async ({
   lat: number;
   lon: number;
 }): Promise<WeatherType> => {
-  // One Call 3.0 endpoint
   const res = await fetch(
     `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&units=imperial&exclude=minutely,alerts&appid=${API_KEY}`
   );
 
   const data = await res.json();
 
-  // API xatolarini tekshirish
   if (data.cod && data.cod !== 200) {
     throw new Error(data.message || "API Error");
   }
 
-  // Zod orqali validatsiya
   return WeatherSchema.parse(data);
+};
+
+export const getGeoCoding = async (location: string) => {
+  const res = await fetch(
+    `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=1&appid=${API_KEY}`
+  );
+
+  const data = await res.json();
+  return GeocodeSchema.parse(data);
 };
