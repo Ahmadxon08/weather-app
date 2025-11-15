@@ -1,14 +1,20 @@
 import { MapContainer, Marker, TileLayer, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import type { CoordsType } from "../../schemas/types";
+import { useEffect } from "react";
+import { MaptilerLayer } from "@maptiler/leaflet-maptilersdk";
 const API_KEY = import.meta.env.VITE_API_KEY;
 
 type Props = {
   coords: CoordsType;
   handleClickMap: (lat: number, lon: number) => void;
   mapType: string;
+  MapTiler?: () => void;
 };
-const MapClick = ({ handleClickMap, coords }: Omit<Props, "mapType">) => {
+const MapClick = ({
+  handleClickMap,
+  coords,
+}: Omit<Props, "mapType" | "MapTiler">) => {
   const map = useMap();
 
   map.panTo([coords.lat, coords.lon]);
@@ -22,10 +28,29 @@ const MapClick = ({ handleClickMap, coords }: Omit<Props, "mapType">) => {
   return null;
 };
 
+const MapTiler = () => {
+  const map = useMap();
+
+  useEffect(() => {
+    const tileLayer = new MaptilerLayer({
+      style: "basic-dark",
+      apiKey: "VunHYBYTLu1aKHMJ2O1a",
+    });
+
+    tileLayer.addTo(map);
+
+    return () => {
+      map.removeLayer(tileLayer);
+    };
+  }, [map]);
+
+  return null;
+};
+
 const Map = ({ coords, handleClickMap, mapType }: Props) => {
   const { lat, lon } = coords;
   return (
-    <div className="flex justify-center w-full px-10">
+    <div className="flex justify-center w-full px-2">
       <MapContainer
         center={[lat, lon]}
         zoom={5}
@@ -35,10 +60,12 @@ const Map = ({ coords, handleClickMap, mapType }: Props) => {
         }}
       >
         <MapClick handleClickMap={handleClickMap} coords={coords} />
-        <TileLayer
+        {/* <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
+        /> */}
+
+        <MapTiler />
         <TileLayer
           url={`https://tile.openweathermap.org/map/${mapType}/{z}/{x}/{y}.png?appid=${API_KEY}`}
         />

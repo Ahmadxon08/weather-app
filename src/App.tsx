@@ -9,6 +9,7 @@ import LocationDropDown from "./components/dropdown/LocationDropDown";
 import { useQuery } from "@tanstack/react-query";
 import { getGeoCoding } from "./api";
 import MapTypeDropDown from "./components/dropdown/MaptypeDropdown";
+import MapLegand from "./components/card/MapLegand";
 
 const App = () => {
   const [coordinates, setCoords] = useState<CoordsType>({
@@ -17,7 +18,7 @@ const App = () => {
   });
 
   const [location, setLocation] = useState("Tokyo");
-  const [mapType, setMapType] = useState("cloud_new");
+  const [mapType, setMapType] = useState("clouds_new");
   const { data } = useQuery({
     queryKey: ["geocode", location],
     queryFn: () => getGeoCoding(location),
@@ -33,7 +34,7 @@ const App = () => {
       ? coordinates
       : { lat: data?.[0].lat ?? 0, lon: data?.[0].lon ?? 0 };
   return (
-    <div className="flex justify-center flex-col items-center bg-gray-800 gap-3.5 p-4">
+    <div className="flex justify-center flex-col  bg-gray-800 gap-3.5 p-4">
       <div className="flex gap-6">
         <div className="flex gap-2">
           <h1 className="text-2xl">Location:</h1>
@@ -44,7 +45,15 @@ const App = () => {
           <MapTypeDropDown mapType={mapType} setMapType={setMapType} />
         </div>
       </div>
-      <Map coords={coords} handleClickMap={handleClickMap} mapType={mapType} />
+
+      <div className="relative">
+        <Map
+          coords={coords}
+          handleClickMap={handleClickMap}
+          mapType={mapType}
+        />
+        <MapLegand mapType={mapType} />
+      </div>
       <CurrentCard coords={coords} />
       <HourlyCard coords={coords} />
       <DailyCard coords={coords} />
