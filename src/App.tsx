@@ -15,12 +15,15 @@ import HourlySkeleton from "./components/skeletons/HourlySkeleton";
 import DailySkeleton from "./components/skeletons/DailySkeleton";
 import AdditionalSkeleton from "./components/skeletons/AdditionalSkeleton";
 import SidePanel from "./components/SidePanel";
+import { Menu } from "lucide-react";
 
 const App = () => {
   const [coordinates, setCoords] = useState<CoordsType>({
     lat: 41.3111,
     lon: 69.2797,
   });
+
+  const [isSidePanelOpen, setSidePanelOpen] = useState(true);
 
   const [location, setLocation] = useState("Tokyo");
   const [mapType, setMapType] = useState("clouds_new");
@@ -41,7 +44,7 @@ const App = () => {
   return (
     <>
       <div className="flex justify-center flex-col  bg-gray-800 gap-3.5 p-4">
-        <div className="flex gap-6">
+        <div className="flex w-full  pr-4 gap-6">
           <div className="flex gap-2">
             <h1 className="text-2xl">Location:</h1>
             <LocationDropDown location={location} setLocation={setLocation} />
@@ -50,6 +53,9 @@ const App = () => {
             <h1 className="text-2xl">Map type:</h1>
             <MapTypeDropDown mapType={mapType} setMapType={setMapType} />
           </div>
+          <button onClick={() => setSidePanelOpen(true)} className=" ml-auto ">
+            <Menu />
+          </button>
         </div>
 
         <div className="relative">
@@ -76,7 +82,11 @@ const App = () => {
           <AdditionalInfo coords={coords} />
         </Suspense>
       </div>
-      <SidePanel coords={coords} />
+      <SidePanel
+        coords={coords}
+        isSidePanelOpen={isSidePanelOpen}
+        setSidePanelOpen={setSidePanelOpen}
+      />
     </>
   );
 };
