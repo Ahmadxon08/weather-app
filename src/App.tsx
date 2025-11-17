@@ -14,6 +14,7 @@ import CurrentSkeleton from "./components/skeletons/CurrentSkeleton";
 import HourlySkeleton from "./components/skeletons/HourlySkeleton";
 import DailySkeleton from "./components/skeletons/DailySkeleton";
 import AdditionalSkeleton from "./components/skeletons/AdditionalSkeleton";
+import SidePanel from "./components/SidePanel";
 
 const App = () => {
   const [coordinates, setCoords] = useState<CoordsType>({
@@ -38,42 +39,45 @@ const App = () => {
       ? coordinates
       : { lat: data?.[0].lat ?? 0, lon: data?.[0].lon ?? 0 };
   return (
-    <div className="flex justify-center flex-col  bg-gray-800 gap-3.5 p-4">
-      <div className="flex gap-6">
-        <div className="flex gap-2">
-          <h1 className="text-2xl">Location:</h1>
-          <LocationDropDown location={location} setLocation={setLocation} />
+    <>
+      <div className="flex justify-center flex-col  bg-gray-800 gap-3.5 p-4">
+        <div className="flex gap-6">
+          <div className="flex gap-2">
+            <h1 className="text-2xl">Location:</h1>
+            <LocationDropDown location={location} setLocation={setLocation} />
+          </div>
+          <div className="flex gap-2">
+            <h1 className="text-2xl">Map type:</h1>
+            <MapTypeDropDown mapType={mapType} setMapType={setMapType} />
+          </div>
         </div>
-        <div className="flex gap-2">
-          <h1 className="text-2xl">Map type:</h1>
-          <MapTypeDropDown mapType={mapType} setMapType={setMapType} />
+
+        <div className="relative">
+          <Map
+            coords={coords}
+            handleClickMap={handleClickMap}
+            mapType={mapType}
+          />
+          <MapLegand mapType={mapType} />
         </div>
+        <Suspense fallback={<CurrentSkeleton />}>
+          <CurrentCard coords={coords} />
+        </Suspense>
+
+        <Suspense fallback={<HourlySkeleton />}>
+          <HourlyCard coords={coords} />
+        </Suspense>
+
+        <Suspense fallback={<DailySkeleton />}>
+          <DailyCard coords={coords} />
+        </Suspense>
+
+        <Suspense fallback={<AdditionalSkeleton />}>
+          <AdditionalInfo coords={coords} />
+        </Suspense>
       </div>
-
-      <div className="relative">
-        <Map
-          coords={coords}
-          handleClickMap={handleClickMap}
-          mapType={mapType}
-        />
-        <MapLegand mapType={mapType} />
-      </div>
-      <Suspense fallback={<CurrentSkeleton />}>
-        <CurrentCard coords={coords} />
-      </Suspense>
-
-      <Suspense fallback={<HourlySkeleton />}>
-        <HourlyCard coords={coords} />
-      </Suspense>
-
-      <Suspense fallback={<DailySkeleton />}>
-        <DailyCard coords={coords} />
-      </Suspense>
-
-      <Suspense fallback={<AdditionalSkeleton />}>
-        <AdditionalInfo coords={coords} />
-      </Suspense>
-    </div>
+      <SidePanel coords={coords} />
+    </>
   );
 };
 
