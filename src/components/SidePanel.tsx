@@ -4,6 +4,7 @@ import Card from "./card/Card";
 import { Suspense } from "react";
 import type { CoordsType } from "@/schemas/types";
 import { Slider } from "./ui/slider";
+import clsx from "clsx";
 
 type Props = {
   coords: CoordsType;
@@ -81,6 +82,10 @@ const AirPullution = ({ coords }: Props) => {
       }),
   });
 
+  if (!data?.list?.[0]?.components) {
+    return <p className="p-4">No air pollution data</p>;
+  }
+
   return (
     <>
       <div className="flex gap-2 p-2 flex-col">
@@ -94,21 +99,58 @@ const AirPullution = ({ coords }: Props) => {
               key.toUpperCase() as keyof typeof airQualityRanges
             ];
           if (!pullutant) return null;
+
+          const currentLevel =
+            Object.entries(pullutant).find(([level, range]) => {
+              return (
+                value >= range.min && (range.max === null || value <= range.max)
+              );
+            })?.[0] ?? "Very Poor";
+
           const max =
             pullutant["Very Poor"].max ?? pullutant["Very Poor"].min * 2;
+
+          const qualityColor = (() => {
+            switch (currentLevel) {
+              case "Good":
+                return "bg-green-500";
+              case "Fair":
+                return "bg-yellow-500";
+              case "Moderate":
+                return "bg-blue-500";
+              case "Poor":
+                return "bg-purple-500";
+              case "Very Poor":
+                return "bg-red-500";
+
+              default:
+                break;
+            }
+          })();
+
           return (
-            <Card
-              key={key}
-              className=" hover:scale-105 transition-transform duration-300 border  p-1.5! gap-0!   "
-            >
-              <div className="w-full justify-between flex mb-2   items-center">
-                <span className="text-lg font-bold capitalize ">{key}</span>
-                <span className="text-lg font-semibold ">{value}</span>
+            <Card key={key}>
+              <div className="flex justify-between items-center mb-2">
+                <span className="capitalize">{key}</span>
+                <span>{value}</span>
               </div>
               <Slider min={0} max={max} defaultValue={[value]} step={1} />
-              <div className="flex mt-2 justify-between">
-                <p className="text-xs">0</p>
-                <p className="text-xs">{max}</p>
+              <div className="flex justify-between text-xs mt-2">
+                <p>0</p>
+                <p>{max}</p>
+              </div>
+              <div className="flex justify-between w-full mt-1">
+                {Object.keys(pullutant).map((levelName) => (
+                  <span
+                    key={levelName}
+                    className={clsx(
+                      "text-xs p-0.5 rounded-sm ",
+                      levelName === currentLevel ? qualityColor : "bg-muted"
+                    )}
+                  >
+                    {levelName}
+                  </span>
+                ))}
               </div>
             </Card>
           );
@@ -120,7 +162,7 @@ const AirPullution = ({ coords }: Props) => {
 
 const SidePanel = ({ coords }: Props) => {
   return (
-    <div className="fixed top-0 right-0 h-screen z-1001 w-60 shadow-md bg-sidebar">
+    <div className="fixed top-0 right-0 h-screen z-1001 panel-scroll w-70 shadow-md bg-sidebar overflow-y-auto">
       <Suspense fallback={"loading..."}>
         <AirPullution coords={coords} />
       </Suspense>
