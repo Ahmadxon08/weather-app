@@ -23,7 +23,7 @@ const App = () => {
     lon: 69.2797,
   });
 
-  const [isSidePanelOpen, setSidePanelOpen] = useState(true);
+  const [isSidePanelOpen, setSidePanelOpen] = useState(false);
 
   const [location, setLocation] = useState("Tokyo");
   const [mapType, setMapType] = useState("clouds_new");
@@ -43,7 +43,7 @@ const App = () => {
       : { lat: data?.[0].lat ?? 0, lon: data?.[0].lon ?? 0 };
   return (
     <>
-      <div className="flex justify-center flex-col  bg-gray-800 gap-3.5 p-4">
+      <div className="flex justify-center flex-col lg:w-[calc(100vw-var(--sidebar-width))] p-2  w-full bg-black gap-3.5 p-4">
         <div className="flex w-full  pr-4 gap-6">
           <div className="flex gap-2">
             <h1 className="text-2xl">Location:</h1>
@@ -53,34 +53,46 @@ const App = () => {
             <h1 className="text-2xl">Map type:</h1>
             <MapTypeDropDown mapType={mapType} setMapType={setMapType} />
           </div>
-          <button onClick={() => setSidePanelOpen(true)} className=" ml-auto ">
+          <button
+            onClick={() => setSidePanelOpen(true)}
+            className=" ml-auto lg:hidden "
+          >
             <Menu />
           </button>
         </div>
+        <div className="grid grid-cols-1 gap-4">
+          <div className="relative col-span-1">
+            <Map
+              coords={coords}
+              handleClickMap={handleClickMap}
+              mapType={mapType}
+            />
+            <MapLegand mapType={mapType} />
+          </div>
+          <div className="col-span-1">
+            <Suspense fallback={<CurrentSkeleton />}>
+              <CurrentCard coords={coords} />
+            </Suspense>
+          </div>
 
-        <div className="relative">
-          <Map
-            coords={coords}
-            handleClickMap={handleClickMap}
-            mapType={mapType}
-          />
-          <MapLegand mapType={mapType} />
+          <div className="col-span-1">
+            <Suspense fallback={<HourlySkeleton />}>
+              <HourlyCard coords={coords} />
+            </Suspense>
+          </div>
+
+          <div className="col-span-1">
+            <Suspense fallback={<DailySkeleton />}>
+              <DailyCard coords={coords} />
+            </Suspense>
+          </div>
+
+          <div className="col-span-1">
+            <Suspense fallback={<AdditionalSkeleton />}>
+              <AdditionalInfo coords={coords} />
+            </Suspense>
+          </div>
         </div>
-        <Suspense fallback={<CurrentSkeleton />}>
-          <CurrentCard coords={coords} />
-        </Suspense>
-
-        <Suspense fallback={<HourlySkeleton />}>
-          <HourlyCard coords={coords} />
-        </Suspense>
-
-        <Suspense fallback={<DailySkeleton />}>
-          <DailyCard coords={coords} />
-        </Suspense>
-
-        <Suspense fallback={<AdditionalSkeleton />}>
-          <AdditionalInfo coords={coords} />
-        </Suspense>
       </div>
       <SidePanel
         coords={coords}

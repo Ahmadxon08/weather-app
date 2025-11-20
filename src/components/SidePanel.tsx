@@ -11,8 +11,8 @@ import SidePanelSkeleton from "./skeletons/SidePanelSkeleton";
 
 type Props = {
   coords: CoordsType;
-  isSidePanelOpen: boolean;
-  setSidePanelOpen: Dispatch<SetStateAction<boolean>>;
+  isSidePanelOpen?: boolean;
+  setSidePanelOpen?: Dispatch<SetStateAction<boolean>>;
 };
 
 type AirQualityLevel = "Good" | "Fair" | "Moderate" | "Poor" | "Very Poor";
@@ -206,11 +206,14 @@ const SidePanel = ({ coords, isSidePanelOpen, setSidePanelOpen }: Props) => {
   return (
     <div
       className={clsx(
-        "fixed top-0 right-0 h-screen z-1001 panel-scroll w-70 shadow-md bg-sidebar overflow-y-auto transition-transform duration-300",
+        "fixed top-0 right-0 h-screen z-1001 panel-scroll w-(--sidebar-width) shadow-md bg-sidebar overflow-y-auto transition-transform lg:translate-x-0 duration-300",
         isSidePanelOpen ? "translate-x-0" : "translate-x-full"
       )}
     >
-      <button onClick={() => setSidePanelOpen(false)} className=" mt-2">
+      <button
+        onClick={() => setSidePanelOpen(false)}
+        className=" md:hidden mt-2"
+      >
         <ChevronRight />
       </button>
       <Suspense fallback={<SidePanelSkeleton />}>
