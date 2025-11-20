@@ -79,7 +79,9 @@ function MapLegand({ mapType }: Props) {
 
   if (!data) {
     return (
-      <div className="absolute top-4 right-4 z-1000 w-48">Invalid map type</div>
+      <div className="absolute top-4 right-4 z-1000 md:w-48  w-[60%]">
+        Invalid map type
+      </div>
     );
   }
 
@@ -89,7 +91,7 @@ function MapLegand({ mapType }: Props) {
     .map((stop) => `${stop.color} ${(stop.value / maxValue) * 100}%`)
     .join(",");
   return (
-    <div className="absolute top-4   right-4 z-1000 w-96 rounded-xl shadow-lg p-2 bg-background/50 border border-accent/70">
+    <div className="absolute top-4   right-4 z-1000 md:w-96 w-[66%] rounded-xl shadow-lg p-2 bg-background/50 border border-accent/70">
       <h3 className="text-sm font-semibold text-foreground">{data.title}</h3>
       <div
         className="w-full my-2 h-6 rounded-xl border border-accent/70"

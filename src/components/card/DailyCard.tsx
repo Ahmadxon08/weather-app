@@ -16,7 +16,10 @@ function DailyCard({ coords }: Props) {
 
   return (
     <>
-      <Card title="Daily forecasts" ChildrenclassName="flex flex-col gap-4">
+      <Card
+        title="Daily forecasts"
+        ChildrenclassName="flex flex-col gap-[8.5px]"
+      >
         {data?.daily.map((day: any) => (
           <div className="flex justify-between" key={day.dt}>
             <p className="text-white w-9">
@@ -25,7 +28,7 @@ function DailyCard({ coords }: Props) {
               })}
             </p>
 
-            <WeatherIconImage src={day.weather[0].icon} />
+            <WeatherIconImage src={day.weather[0].icon} className="size-10" />
             <p className="text-gray-50">{Math.round(day.temp.day)}°F</p>
             <p className="text-gray-500/75">{Math.round(day.temp.min)}°F</p>
             <p className="text-gray-500/75">{Math.round(day.temp.max)}°F</p>

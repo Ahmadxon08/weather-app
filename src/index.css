@@ -144,6 +144,13 @@
   }
 }
 
+.leaflet-control-attribution {
+  display: none !important;
+}
+.leaflet-control-maptiler-logo {
+  display: none !important;
+}
+
 .panel-scroll {
   overflow-y: auto;
   scrollbar-width: thin;

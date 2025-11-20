@@ -1,4 +1,3 @@
-import React from "react";
 import Card from "../card/Card";
 import { Skeleton } from "./Skeleton";
 
@@ -10,7 +9,7 @@ function CurrentSkeleton({}: Props) {
       title="Current Weather"
       ChildrenclassName="flex justify-center flex-col gap-6 items-center"
     >
-      <div className="flex flex-col items-center gap-2">
+      <div className="flex flex-col items-center gap-4.5">
         <Skeleton className="h-16 w-32 rounded-lg" />
         <Skeleton className="h-11 w-11 rounded-full" />
 

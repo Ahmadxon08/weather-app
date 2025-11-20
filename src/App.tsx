@@ -43,25 +43,29 @@ const App = () => {
       : { lat: data?.[0].lat ?? 0, lon: data?.[0].lon ?? 0 };
   return (
     <>
-      <div className="flex justify-center flex-col lg:w-[calc(100vw-var(--sidebar-width))] p-2  w-full bg-black gap-3.5 p-4">
-        <div className="flex w-full  pr-4 gap-6">
-          <div className="flex gap-2">
-            <h1 className="text-2xl">Location:</h1>
-            <LocationDropDown location={location} setLocation={setLocation} />
-          </div>
-          <div className="flex gap-2">
-            <h1 className="text-2xl">Map type:</h1>
-            <MapTypeDropDown mapType={mapType} setMapType={setMapType} />
+      <div className="flex justify-center flex-col lg:w-[calc(100vw-var(--sidebar-width))]   w-full bg-black gap-3.5 p-4">
+        <div className="flex w-full items-start justify-start  pr-4 md:gap-6 gap-2.5">
+          <div className="flex flex-col md:flex-row gap-1.5 ">
+            <div className="flex gap-2 justify-between w-full">
+              <h1 className="md:text-2xl text-xl">Location:</h1>
+              <LocationDropDown location={location} setLocation={setLocation} />
+            </div>
+            <div className="flex gap-2">
+              <h1 className="md:text-2xl text-xl whitespace-nowrap">
+                Map type:
+              </h1>
+              <MapTypeDropDown mapType={mapType} setMapType={setMapType} />
+            </div>
           </div>
           <button
             onClick={() => setSidePanelOpen(true)}
-            className=" ml-auto lg:hidden "
+            className=" ml-auto justify-start lg:hidden "
           >
             <Menu />
           </button>
         </div>
-        <div className="grid grid-cols-1 gap-4">
-          <div className="relative col-span-1">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="relative col-span-1 md:col-span-2">
             <Map
               coords={coords}
               handleClickMap={handleClickMap}
@@ -69,15 +73,10 @@ const App = () => {
             />
             <MapLegand mapType={mapType} />
           </div>
+
           <div className="col-span-1">
             <Suspense fallback={<CurrentSkeleton />}>
               <CurrentCard coords={coords} />
-            </Suspense>
-          </div>
-
-          <div className="col-span-1">
-            <Suspense fallback={<HourlySkeleton />}>
-              <HourlyCard coords={coords} />
             </Suspense>
           </div>
 
@@ -87,7 +86,13 @@ const App = () => {
             </Suspense>
           </div>
 
-          <div className="col-span-1">
+          <div className="col-span-1 md:col-span-2">
+            <Suspense fallback={<HourlySkeleton />}>
+              <HourlyCard coords={coords} />
+            </Suspense>
+          </div>
+
+          <div className="col-span-1 md:col-span-2">
             <Suspense fallback={<AdditionalSkeleton />}>
               <AdditionalInfo coords={coords} />
             </Suspense>

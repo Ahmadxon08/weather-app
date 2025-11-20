@@ -103,7 +103,7 @@ const AdditionalInfo = ({ coords }: Props) => {
   return (
     <Card
       title="Additional Weather Info"
-      ChildrenclassName="flex flex-col gap-6"
+      ChildrenclassName="grid grid-cols-1 md:grid-cols-2 gap-6"
     >
       {rows.map((row) => {
         const Icon = row.icon;

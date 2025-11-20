@@ -12,7 +12,7 @@ import SidePanelSkeleton from "./skeletons/SidePanelSkeleton";
 type Props = {
   coords: CoordsType;
   isSidePanelOpen?: boolean;
-  setSidePanelOpen?: Dispatch<SetStateAction<boolean>>;
+  setSidePanelOpen?: Dispatch<SetStateAction<boolean>> | undefined;
 };
 
 type AirQualityLevel = "Good" | "Fair" | "Moderate" | "Poor" | "Very Poor";
