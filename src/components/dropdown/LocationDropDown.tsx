@@ -13,6 +13,7 @@ type Props = {
 };
 
 const worldCities = [
+  "Tashkent",
   "London",
   "Paris",
   "New York",

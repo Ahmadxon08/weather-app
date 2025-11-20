@@ -3,7 +3,6 @@ import { GeocodeSchema } from "./schemas/GeocodeSchema";
 import { WeatherSchema, type WeatherType } from "./schemas/WeatherSchema";
 
 const API_KEY = import.meta.env.VITE_API_KEY;
-
 export const getWeather = async ({
   lat,
   lon,
@@ -12,7 +11,7 @@ export const getWeather = async ({
   lon: number;
 }): Promise<WeatherType> => {
   const res = await fetch(
-    `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&units=imperial&exclude=minutely,alerts&appid=${API_KEY}`
+    `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&units=metric&exclude=minutely,alerts&appid=${API_KEY}`
   );
 
   const data = await res.json();

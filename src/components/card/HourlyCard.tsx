@@ -35,7 +35,7 @@ const HourlyCard = ({ coords }: Props) => {
               {hourString}
             </p>
             <WeatherIconImage src={hour.weather[0].icon} />
-            <p className=" text-sm font-semibold">{Math.round(hour.temp)}°F</p>
+            <p className=" text-sm font-semibold">{Math.round(hour.temp)}°C</p>
           </div>
         );
       })}

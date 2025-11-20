@@ -21,7 +21,7 @@ const CurrentCard = ({ coords }: Props) => {
     >
       <div className="flex flex-col items-center gap-4.5">
         <h2 className="text-6xl font-semibold text-center">
-          {Math.round(data.current.temp)}°F
+          {Math.round(data.current.temp)}°C
         </h2>
         <WeatherIconImage
           src={data.current.weather[0].icon}
@@ -47,7 +47,7 @@ const CurrentCard = ({ coords }: Props) => {
       <div className="flex justify-between  w-full">
         <div className="flex  flex-col items-center gap-3">
           <p>Feels like</p>
-          <p>{Math.round(data.current.feels_like)}°F</p>
+          <p>{Math.round(data.current.feels_like)}°C</p>
         </div>
         <div className="flex  flex-col items-center gap-3">
           <p>Humidity</p>
