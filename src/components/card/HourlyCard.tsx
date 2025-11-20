@@ -31,13 +31,11 @@ const HourlyCard = ({ coords }: Props) => {
             key={hour.dt}
             className="flex flex-col items-center justify-center gap-2 backdrop-blur-md p-3 rounded-2xl min-w-[90px] hover:bg-white/20 transition-all"
           >
-            <p className="text-white text-sm whitespace-nowrap font-medium">
+            <p className=" text-sm whitespace-nowrap font-medium">
               {hourString}
             </p>
             <WeatherIconImage src={hour.weather[0].icon} />
-            <p className="text-white text-sm font-semibold">
-              {Math.round(hour.temp)}°F
-            </p>
+            <p className=" text-sm font-semibold">{Math.round(hour.temp)}°F</p>
           </div>
         );
       })}

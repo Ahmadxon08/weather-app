@@ -13,10 +13,10 @@ const Card = ({ children, title, className, ChildrenclassName }: Props) => {
     <div
       className={clsx(
         className,
-        "p-4 gap-3 w-full rounded-xl shadow-md bg-zinc-800"
+        "p-4 gap-3 w-full rounded-xl shadow-md  dark:bg-zinc-800"
       )}
     >
-      <h1 className="text-2xl mb-3 text-white font-semibold">{title}</h1>
+      <h1 className="text-2xl mb-3  font-semibold">{title}</h1>
       <div
         className={clsx(
           ChildrenclassName,

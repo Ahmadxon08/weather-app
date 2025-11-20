@@ -20,7 +20,7 @@ const CurrentCard = ({ coords }: Props) => {
       ChildrenclassName="flex justify-center flex-col gap-6 items-center"
     >
       <div className="flex flex-col items-center gap-4.5">
-        <h2 className="text-6xl font-semibold text-center text-white">
+        <h2 className="text-6xl font-semibold text-center">
           {Math.round(data.current.temp)}°F
         </h2>
         <WeatherIconImage
@@ -28,13 +28,13 @@ const CurrentCard = ({ coords }: Props) => {
           className="size-14"
         />
 
-        <h3 className="capitalize text-2xl text-white">
+        <h3 className="capitalize text-2xl ">
           {data.current.weather[0].description}
         </h3>
       </div>
       <div className="flex flex-col gap-3">
-        <p className="text-center text-white">Local time:</p>
-        <h3 className="text-4xl text-white font-semibold">
+        <p className="text-center ">Local time:</p>
+        <h3 className="text-4xl font-semibold">
           {new Intl.DateTimeFormat("en-US", {
             hour: "2-digit",
             minute: "2-digit",
@@ -45,15 +45,15 @@ const CurrentCard = ({ coords }: Props) => {
       </div>
 
       <div className="flex justify-between  w-full">
-        <div className="flex text-white flex-col items-center gap-3">
+        <div className="flex  flex-col items-center gap-3">
           <p>Feels like</p>
           <p>{Math.round(data.current.feels_like)}°F</p>
         </div>
-        <div className="flex text-white flex-col items-center gap-3">
+        <div className="flex  flex-col items-center gap-3">
           <p>Humidity</p>
           <p>{data.current.humidity}</p>
         </div>
-        <div className="flex text-white flex-col items-center gap-3">
+        <div className="flex  flex-col items-center gap-3">
           <p>Wind Speed</p>
           <p>{data.current.wind_speed}mph</p>
         </div>

@@ -22,14 +22,14 @@ function DailyCard({ coords }: Props) {
       >
         {data?.daily.map((day: any) => (
           <div className="flex justify-between" key={day.dt}>
-            <p className="text-white w-9">
+            <p className=" w-9">
               {new Date(day.dt * 1000).toLocaleDateString(undefined, {
                 weekday: "short",
               })}
             </p>
 
             <WeatherIconImage src={day.weather[0].icon} className="size-10" />
-            <p className="text-gray-50">{Math.round(day.temp.day)}°F</p>
+            <p>{Math.round(day.temp.day)}°F</p>
             <p className="text-gray-500/75">{Math.round(day.temp.min)}°F</p>
             <p className="text-gray-500/75">{Math.round(day.temp.max)}°F</p>
           </div>

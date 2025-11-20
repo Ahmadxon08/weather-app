@@ -33,11 +33,11 @@ const pollutantNameMapping: Record<Pollutant, string> = {
   NH3: "Ammonia",
 };
 
-type Pollutant = "SO2" | "NO2" | "PM10" | "PM2_5" | "O3" | "CO";
+type Pollutant = "SO2" | "NO2" | "PM10" | "PM2_5" | "O3" | "CO" | "NO" | "NH3";
 
 interface AirQualityRanges {
   [key: string]: {
-    [level in AirQualityLevel]?: Range;
+    [level in AirQualityLevel]?: Range | undefined;
   };
 }
 
@@ -137,7 +137,8 @@ const AirPullution = ({ coords }: Props) => {
             })?.[0] ?? "Very Poor";
 
           const max =
-            pullutant["Very Poor"].max ?? pullutant["Very Poor"].min * 2;
+            pullutant["Very Poor"]?.max ??
+            (pullutant["Very Poor"]?.min ?? 0) * 2;
 
           const qualityColor = (() => {
             switch (currentLevel) {
@@ -211,7 +212,7 @@ const SidePanel = ({ coords, isSidePanelOpen, setSidePanelOpen }: Props) => {
       )}
     >
       <button
-        onClick={() => setSidePanelOpen(false)}
+        onClick={() => setSidePanelOpen?.(false)}
         className=" md:hidden mt-2"
       >
         <ChevronRight />

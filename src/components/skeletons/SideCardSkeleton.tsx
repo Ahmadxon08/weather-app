@@ -1,9 +1,7 @@
 import Card from "../card/Card";
 import { Skeleton } from "./Skeleton";
 
-type Props = {};
-
-const SideCardSkeleton = (props: Props) => {
+const SideCardSkeleton = () => {
   return (
     <Card>
       <div className="flex justify-between py-1 items-center">

@@ -16,6 +16,7 @@ import DailySkeleton from "./components/skeletons/DailySkeleton";
 import AdditionalSkeleton from "./components/skeletons/AdditionalSkeleton";
 import SidePanel from "./components/SidePanel";
 import { Menu } from "lucide-react";
+import DarkMode from "./components/DarkMode";
 
 const App = () => {
   const [coordinates, setCoords] = useState<CoordsType>({
@@ -43,8 +44,8 @@ const App = () => {
       : { lat: data?.[0].lat ?? 0, lon: data?.[0].lon ?? 0 };
   return (
     <>
-      <div className="flex justify-center flex-col lg:w-[calc(100vw-var(--sidebar-width))]   w-full bg-black gap-3.5 p-4">
-        <div className="flex w-full items-start justify-start  pr-4 md:gap-6 gap-2.5">
+      <div className="flex justify-center flex-col lg:w-[calc(100vw-var(--sidebar-width))]   w-full  gap-3.5 p-4">
+        <div className="flex w-full items-start justify-start md:items-center md:justify-between  pr-4 md:gap-6 gap-2.5">
           <div className="flex flex-col md:flex-row gap-1.5 ">
             <div className="flex gap-2 justify-between w-full">
               <h1 className="md:text-2xl text-xl">Location:</h1>
@@ -57,6 +58,7 @@ const App = () => {
               <MapTypeDropDown mapType={mapType} setMapType={setMapType} />
             </div>
           </div>
+          <DarkMode />
           <button
             onClick={() => setSidePanelOpen(true)}
             className=" ml-auto justify-start lg:hidden "
